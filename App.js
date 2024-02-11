@@ -30,7 +30,9 @@ export default function App() {
   const [showAppOtions, setShowAppOtions] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [pickedEmoji, setPickedEmoji] = useState(null);
+  // For permission to save photo on device
   const [status, requestPermission] = MediaLibrary.usePermissions();
+  // Ref for the image and emoji to save photo
   const imageRef = useRef();
 
   // Granting permission
@@ -38,7 +40,8 @@ export default function App() {
     requestPermission();
   }
 
-  // Event handler
+  // Event handler's
+  // Picking image from the photo's
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -54,14 +57,17 @@ export default function App() {
     }
   };
 
+  // On reset to hide emoji and icons
   const onReset = () => {
     setShowAppOtions(false);
   };
 
+  // On add sticker to open modal for emoji's
   const onAddSticker = () => {
     setIsModalVisible(true);
   };
 
+  // On save image async to save image on device
   const onSaveImageAsync = async () => {
     if (Platform.OS !== "web") {
       try {
@@ -95,31 +101,42 @@ export default function App() {
     }
   };
 
+  // On modal close to hide emoji's modal
   const onModalClose = () => {
     setIsModalVisible(false);
   };
 
   return (
+    // Gesture handler root to handle gesture here
     <GestureHandlerRootView style={styles.container}>
-      {/* <Text style={{ color: "#fff" }}>Hello world!</Text> */}
+      {/* Image container */}
       <View style={styles.imageContainer}>
-        {/* <Image source={PlaceholderImage} style={styles.image} /> */}
+        {/* Image view */}
         <View ref={imageRef} collapsable={false}>
+          {/* ImageViewer component to display image */}
           <ImageViewer
             placeholderImageSource={PlaceholderImage}
             selectedImage={selectedImage}
           />
+          {/* Conditionally showing Picked emoji on photo */}
           {pickedEmoji && (
+            // Emoji Sticker component with props
             <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
           )}
         </View>
       </View>
 
+      {/* Conditionally showing the buttons here for rest emoji picker save and footer button's choose a photo and use this photo button's */}
       {showAppOtions ? (
+        // Option's container
         <View style={styles.optionsContainer}>
+          {/* Option's row */}
           <View style={styles.optionsRow}>
+            {/* Reset button */}
             <IconButton icon="refresh" label="Reset" onPress={onReset} />
+            {/* Emoji picker button */}
             <CircleButton onPress={onAddSticker} />
+            {/* Save button */}
             <IconButton
               icon="save-alt"
               label="Save"
@@ -129,11 +146,13 @@ export default function App() {
         </View>
       ) : (
         <View style={styles.footerContainer}>
+          {/* Choose a photo here*/}
           <Button
             theme="primary"
             label="Choose a photo"
             onPress={pickImageAsync}
           />
+          {/* Use this photo button here */}
           <Button
             label="Use this photo"
             onPress={() => setShowAppOtions(true)}
@@ -141,15 +160,18 @@ export default function App() {
         </View>
       )}
 
+      {/* EmojiPicker component */}
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
-        {/* A list of emoji component will go here */}
+        {/* Emoji list componenet is here */}
         <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
       </EmojiPicker>
+      {/* Status bar */}
       <StatusBar style="light" />
     </GestureHandlerRootView>
   );
 }
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

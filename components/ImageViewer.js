@@ -1,8 +1,8 @@
-// Creating Image Viewer component here
-
+// Creating Image Viewer component here to show image on home page
 import { Image, StyleSheet } from "react-native";
 
 export default function ImageViewer({ placeholderImageSource, selectedImage }) {
+    // Dynamically changing the selected image 
   const imageSource = selectedImage
     ? { uri: selectedImage }
     : placeholderImageSource;

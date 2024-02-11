@@ -1,12 +1,13 @@
-// Circle button componenet is here
-
+// Circle button componenet is here to open the emoji's picker
 import { Pressable, StyleSheet, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function CircleButton({ onPress }) {
   return (
     <View style={styles.circleButtonContainer}>
+      {/* Pressable Button */}
       <Pressable style={styles.circleButton} onPress={onPress}>
+        {/* Icon */}
         <MaterialIcons name="add" size={38} color="#25292e" />
       </Pressable>
     </View>

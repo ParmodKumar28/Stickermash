@@ -1,18 +1,22 @@
-// Emoji Picker component is here
-
+// Emoji Picker component is here to pick the emoji
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function EmojiPicker({ isVisible, children, onClose }) {
   return (
+    // Modal to show the emoji's list here
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={styles.modalContent}>
         <View style={styles.titleContainer}>
+          {/* Modal title */}
           <Text style={styles.title}>Choose a sticker</Text>
+          {/* Close button */}
           <Pressable onPress={onClose}>
+            {/* Icon */}
             <MaterialIcons name="close" color="#fff" size={22} />
           </Pressable>
         </View>
+        {/* Emoji's */}
         {children}
       </View>
     </Modal>
